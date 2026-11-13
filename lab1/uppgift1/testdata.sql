@@ -58,3 +58,10 @@ SELECT 'studio' AS tabell, COUNT(*) FROM studio
 UNION ALL SELECT 'actor', COUNT(*) FROM actor
 UNION ALL SELECT 'movie', COUNT(*) FROM movie
 UNION ALL SELECT 'movie_actor', COUNT(*) FROM movie_actor;
+
+SELECT m.title, s.name AS studio, a.first_name, a.last_name, ma.role_name
+FROM movie m
+LEFT JOIN studio s ON m.studio_id = s.studio_id
+JOIN movie_actor ma ON m.movie_id = ma.movie_id
+JOIN actor a ON ma.actor_id = a.actor_id
+ORDER BY m.title, a.last_name;
