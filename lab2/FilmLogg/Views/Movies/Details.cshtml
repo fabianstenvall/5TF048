@@ -1,0 +1,20 @@
+@model FilmLogg.ViewModels.MovieDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Movie.Title;
+}
+
+<h1>@Model.Movie.Title (@Model.Movie.ReleaseYear)</h1>
+
+<p>Speltid: @Model.RuntimeFormatted</p>
+<p>Studio: @(Model.Studio != null ? Model.Studio.Name : "Ingen studio")</p>
+
+<h2>Skådespelare</h2>
+<ul>
+    @foreach (var member in Model.Cast)
+    {
+        <li>@member.ActorName som @member.RoleName</li>
+    }
+</ul>
+
+<a asp-action="Index">Tillbaka till listan</a>
