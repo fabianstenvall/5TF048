@@ -6,6 +6,24 @@
 
 <h1>Filmer</h1>
 
+@{
+    string? lastSearch = ViewBag.LastSearch;
+}
+
+<form method="get" asp-action="Index" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="Sök på titel" />
+        <button type="submit" class="btn btn-primary">Sök</button>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(lastSearch))
+{
+    <p>Din förra sökning: <a asp-action="Index" asp-route-search="@lastSearch">@lastSearch</a></p>
+}
+
+<p>Antal filmer: @Model.Count, total speltid: @ViewBag.TotalRuntime minuter</p>
+
 <table class="table">
     <thead>
         <tr>

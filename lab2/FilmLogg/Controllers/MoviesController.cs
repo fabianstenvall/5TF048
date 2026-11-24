@@ -6,9 +6,29 @@ namespace FilmLogg.Controllers;
 
 public class MoviesController : Controller
 {
-    public IActionResult Index()
+    public IActionResult Index(string? search)
     {
+        // Läs förra sökningen från cookien innan vi skriver över den
+        ViewBag.LastSearch = Request.Cookies["LastSearch"];
+
         var movies = MovieRepository.GetAllMovies();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            movies = movies
+                .Where(m => m.Title.Contains(search, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            // Spara sökningen i en cookie i 7 dagar
+            Response.Cookies.Append("LastSearch", search, new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(7)
+            });
+        }
+
+        ViewBag.Search = search;
+        ViewBag.TotalRuntime = movies.Sum(m => m.RuntimeMinutes);
+
         return View(movies);
     }
 
