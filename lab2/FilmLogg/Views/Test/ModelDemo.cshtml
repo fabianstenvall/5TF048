@@ -1,0 +1,10 @@
+@model FilmLogg.Models.Movie
+
+@{
+    ViewData["Title"] = "Modell";
+}
+
+<h1>Modell som parameter till View</h1>
+<p>Titel: @Model.Title</p>
+<p>År: @Model.ReleaseYear</p>
+<p>Speltid: @Model.RuntimeMinutes minuter</p>
